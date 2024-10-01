@@ -1,6 +1,6 @@
 # KafkaPotion
 [Demo link](https://drive.google.com/file/d/1NqLh3m7E-5ohFyqYtR32rb1XyCaPj5c7/view?usp=sharing)
-## Setup
+## Launch
 Split up your tmux window into 3 panes.
 Do this in the pane 1.1
 ```bash
@@ -10,7 +10,6 @@ In one of the other two panes, do
 ```bash
 iex -S mix
 ```
-Assuming you have fish shell here.
 In the third window, do
 ```bash
 ./sumnos 100

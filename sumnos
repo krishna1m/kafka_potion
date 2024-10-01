@@ -1,6 +1,10 @@
-#!/usr/bin/env fish
-set count $argv[1]
+#!/usr/bin/env bash
+if [ $# -ne 1 ]; then
+  echo "error: Give a number as a second argument"
+  exit 1
+fi
+count=$1
 tmux send-keys -t 1.1 $count C-m
-for i in (seq $count)
-    tmux send-keys -t 1.1 $i C-m
-end
+for i in $(seq "$count"); do
+  tmux send-keys -t 1.1 $i C-m
+done
