@@ -68,10 +68,10 @@ config :kafka_ex,
   # for supported options
   ssl_options: [
     # Fix warnings. More at https://github.com/erlang/otp/issues/5352
-    verify: :verify_none,
-    cacertfile: File.cwd!() <> "/ssl/ca-cert",
-    certfile: File.cwd!() <> "/ssl/cert.pem",
-    keyfile: File.cwd!() <> "/ssl/key.pem"
+    # verify: :verify_none,
+    # cacertfile: File.cwd!() <> "/ssl/ca-cert",
+    # certfile: File.cwd!() <> "/ssl/cert.pem",
+    # keyfile: File.cwd!() <> "/ssl/key.pem"
   ],
   snappy_module: :snappyer,
   # set this to the version of the kafka broker that you are using
