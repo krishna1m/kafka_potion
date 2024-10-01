@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+docker stop $(docker ps -aq) && docker rm -v $(docker ps -aq)
+echo "pods cleaned"
+docker compose up -d
+echo "pods up"
+for i in 1 2 3 4 5
+do
+  started=$(nc -zv localhost 22181 && nc -zv localhost 29092 && docker-compose logs kafka | grep -c started)
+  if [ $started -eq 1 ]
+  then
+    break
+  else
+    sleep 2
+  fi
+done
+echo "Kafka up and running..."
+echo "creating topic test"
+docker exec -it kafka_potion-kafka-1 kafka-topics --bootstrap-server localhost:9092 --topic test --create --partitions 1 --replication-factor 1
+echo "topic created"
+docker exec -it kafka_potion-kafka-1 kafka-console-producer --bootstrap-server localhost:9092 --topic test

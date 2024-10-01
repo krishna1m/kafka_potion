@@ -1,25 +1,24 @@
 defmodule TestItOut do
-  def shift_offset_and_stream(elements, stream) do
-    offset =
-      elements
-      |> List.last
-      |> Map.get(:offset)
-      |> Kernel.+(1)
-    stream = %{stream | fetch_request: %{stream.fetch_request | offset: offset}}
-    {offset, stream}
+  defp shift_offset(elements) do
+    elements
+    |> List.last
+    |> Map.get(:offset)
+    |> Kernel.+(1)
+  end
+  defp shift_offset_and_stream(elements, stream) do
+    stream = %{stream | fetch_request: %{stream.fetch_request | offset: shift_offset(elements)}}
+    {shift_offset(elements), stream}
   end
 
   def carry_out_operations(stream) do
     IO.inspect "Expecting count of numbers to sum"
-    buffer_size_element = Enum.take(stream, 1) |> hd
+    buffer_size_elements = Enum.take(stream, 1)
     buffer_size =
-      buffer_size_element
+      buffer_size_elements
+      |> hd
       |> Map.get(:value)
       |> String.to_integer
-    offset =
-      buffer_size_element
-      |> Map.get(:offset)
-      |> Kernel.+(1)
+    offset = shift_offset(buffer_size_elements)
     stream = %{stream | fetch_request: %{stream.fetch_request | offset: offset}}
     IO.inspect "Will be summing up #{buffer_size} numbers"
     elements = Enum.take(stream, buffer_size)
